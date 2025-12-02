@@ -35,3 +35,7 @@ clippy.toml
 # Go coverage files
 *.coverprofile
 coverage.txt
+
+# Input files
+input.txt
+example.txt
