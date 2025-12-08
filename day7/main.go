@@ -50,4 +50,36 @@ func main() {
 	}
 
 	fmt.Println(times_splitted)
+
+	// part 2
+	cached_function_results := make(map[[2]int]int)
+	fmt.Println(dfs(manifold, 0, start, cached_function_results))
+}
+
+func dfs(manifold []string, row, col int, cached_function_results map[[2]int]int) int {
+
+	if row < 0 || row >= len(manifold) || col < 0 || col >= len(manifold[row]) {
+		return 0
+	}
+
+	function_params := [2]int{row, col}
+	if cached_function_results[function_params] != 0 {
+		return cached_function_results[function_params]
+	}
+
+	if row == len(manifold) - 1 {
+		cached_function_results[function_params] = 1
+		return 1
+	}
+
+	cell := manifold[row][col]
+	var function_result int
+	if cell == '^' {
+		function_result = dfs(manifold, row + 1, col - 1, cached_function_results) + dfs(manifold, row + 1, col + 1, cached_function_results)
+	} else {
+		function_result = dfs(manifold, row + 1, col, cached_function_results)
+	}
+
+	cached_function_results[function_params] = function_result
+	return function_result
 }
